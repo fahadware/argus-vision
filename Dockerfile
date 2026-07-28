@@ -35,6 +35,9 @@ COPY . .
 EXPOSE 5000
 
 # --- The command that runs when the container starts ---
-# Uses gunicorn (production server) instead of Flask's dev server,
-# matching what your Procfile already does for Render/Railway deployment.
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5000", "--workers", "1", "--threads", "4", "--timeout", "120"]
+# Uses gunicorn (production server) instead of Flask's dev server.
+# IMPORTANT: uses shell form (not exec-array form) so that $PORT gets
+# substituted at runtime. Platforms like Railway/Render assign their own
+# dynamic port via the PORT environment variable - hardcoding 5000 here
+# would make the container unreachable and get marked as crashed.
+CMD gunicorn app:app --bind 0.0.0.0:${PORT:-5000} --workers 1 --threads 4 --timeout 120
