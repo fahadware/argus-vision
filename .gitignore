@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+.venv/
+
+# Session data generated at runtime (should not be in version control)
+session_reports/
+drowsy_screenshots/
+ARGUS_screenshots/
+
+# Editor/OS junk
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Environment variables (if you add any secrets later)
+.env

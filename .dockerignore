@@ -1,0 +1,18 @@
+# Same idea as .gitignore, but for Docker: these files won't be copied
+# into the image, keeping it smaller and builds faster.
+
+__pycache__/
+*.pyc
+.git/
+.gitignore
+
+# Runtime-generated data (shouldn't be baked into the image)
+session_reports/
+ARGUS_screenshots/
+
+# Secrets - never bake these into an image; pass them in at runtime instead
+.env
+
+# Editor junk
+.vscode/
+.idea/
