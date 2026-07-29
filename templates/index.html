@@ -271,6 +271,20 @@
       flex-shrink: 0;
     }
 
+    .footer-credit {
+      margin-top: clamp(16px, 3vh, 28px);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      opacity: 0.7;
+      text-align: center;
+    }
+    .footer-credit strong {
+      color: var(--teal);
+      font-weight: 600;
+    }
+
     #reportBox {
       flex-shrink: 0;
     }
@@ -520,6 +534,8 @@
     </div>
 
     <audio id="alertSound" src="/sleep-alert.mp3" loop preload="auto"></audio>
+
+    <p class="footer-credit">Argus © 2026 — Built by <strong>Fahad</strong></p>
   </div>
 
   <script>
@@ -564,6 +580,7 @@
 
     async function detectFrame() {
       if (!running || video.readyState < 2) return;
+      if (!video.videoWidth || !video.videoHeight) return; // video not ready yet, skip this tick
 
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
