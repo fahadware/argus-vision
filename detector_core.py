@@ -8,6 +8,7 @@ measures actual eye geometry rather than pattern-matching an "eye region"
 
 import os
 import time
+import threading 
 from datetime import datetime
 
 import cv2
@@ -31,7 +32,7 @@ _face_mesh = _mp_face_mesh.FaceMesh(
     min_detection_confidence=0.5,
     min_tracking_confidence=0.5,
 )
-
+_face_mesh_lock = threading.Lock()
 # Standard MediaPipe landmark indices for the 6 EAR points per eye
 # (p1, p2, p3, p4, p5, p6 going around the eye)
 LEFT_EYE_IDX = [362, 385, 387, 263, 373, 380]
@@ -69,7 +70,8 @@ def detect_face_and_eyes(frame_bgr):
     """
     h, w = frame_bgr.shape[:2]
     rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
-    results = _face_mesh.process(rgb)
+    with _face_mesh_lock:
+        results = _face_mesh.process(rgb)
 
     if not results.multi_face_landmarks:
         return None, False, []
